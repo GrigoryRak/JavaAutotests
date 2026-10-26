@@ -1,22 +1,23 @@
-import java.lang.reflect.Array;
+package methods;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Main {
-//    Задача 1: разработать метод с сигнатурой publiс static boolean isEven(int n). Метод возвращает true, если число чётное, и false — если нечётное.
-    public static boolean isEvent(int n) {
+public class testMethods {
+    //    Задача 1: разработать метод с сигнатурой publiс static boolean isEven(int n). Метод возвращает true, если число чётное, и false — если нечётное.
+    public static boolean isEven(int n) {
         return n % 2 == 0;
     }
 
-//    Задача 2: разработать метод с сигнатурой public static String checkAccess(int age).
+    //    Задача 2: разработать метод с сигнатурой public static String checkAccess(int age).
 //    Метод возвращает Allowed, если число строго больше 18, и Denied — если меньше.
     public static String checkAccess(int age) {
         if (age > 18) {
             return "Allowed";
         } else return "Denied";
     }
-//    Задача 3: разработать метод с сигнатурой public static boolean isPositive(int n).
+    //    Задача 3: разработать метод с сигнатурой public static boolean isPositive(int n).
 //    Метод должен возвращать true, если переданное число больше или равно нулю, и false, если переданное число меньше нуля.
 //    Проверка внутри метода должна происходить с помощью тернарного оператора.
     public static boolean isPositive(int n){
@@ -33,13 +34,13 @@ public class Main {
 
     public static String getGrade(int score){
         return (score>=0 && score<=20) ? "E" :
-               (score>=21 && score<=40) ? "D" :
-               (score>=41 && score<=60) ? "C" :
-               (score>=61 && score<=80) ? "B" :
-               (score>=81 && score<=100) ? "A" : "Error";
+                (score>=21 && score<=40) ? "D" :
+                        (score>=41 && score<=60) ? "C" :
+                                (score>=61 && score<=80) ? "B" :
+                                        (score>=81 && score<=100) ? "A" : "Error";
     }
 
-//    Задача 5: разработать метод с сигнатурой public static String blastOff(int start).
+    //    Задача 5: разработать метод с сигнатурой public static String blastOff(int start).
 //    Метод принимает стартовое число (например, 5) и возвращает строку со всеми числами до 1 и словом «Поехали!» в конце (например, «5 4 3 2 1 Поехали!»).
     public static String blastOff(int start){
         if (start > 0) {
@@ -52,7 +53,7 @@ public class Main {
         } else return "Введено число <=0. Вы ввели число: " + start;
     }
 
-//    Задача 6: разработать метод с сигнатурой public static int sumToN(int n). Метод возвращает сумму всех целых чисел от 1 до n.
+    //    Задача 6: разработать метод с сигнатурой public static int sumToN(int n). Метод возвращает сумму всех целых чисел от 1 до n.
     public static int sumToN(int n){
         if ( n < 1 ) {
             return 0;
@@ -90,7 +91,7 @@ public class Main {
         return stB.toString().trim();
     }
 
-//    Задача 9: разработать метод с сигнатурой public static int findMax(int[] arr). Метод находит и возвращает самое большое число в переданном массиве.
+    //    Задача 9: разработать метод с сигнатурой public static int findMax(int[] arr). Метод находит и возвращает самое большое число в переданном массиве.
     public static int findMax(int[] arr){
         Arrays.sort(arr);
         int i = arr[arr.length - 1];
@@ -151,8 +152,8 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Задача 1");
-        System.out.println(isEvent(4));
-        System.out.println(isEvent(7));
+        System.out.println(isEven(4));
+        System.out.println(isEven(7));
         System.out.println();
         System.out.println("Задача 2");
         System.out.println(checkAccess(19));
@@ -214,5 +215,4 @@ public class Main {
         System.out.println(names);
         System.out.println(delNames);
     }
-
 }
