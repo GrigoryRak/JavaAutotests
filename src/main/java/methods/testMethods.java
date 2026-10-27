@@ -35,9 +35,9 @@ public class testMethods {
     public static String getGrade(int score){
         return (score>=0 && score<=20) ? "E" :
                 (score>=21 && score<=40) ? "D" :
-                        (score>=41 && score<=60) ? "C" :
-                                (score>=61 && score<=80) ? "B" :
-                                        (score>=81 && score<=100) ? "A" : "Error";
+                (score>=41 && score<=60) ? "C" :
+                (score>=61 && score<=80) ? "B" :
+                (score>=81 && score<=100) ? "A" : "Error";
     }
 
     //    Задача 5: разработать метод с сигнатурой public static String blastOff(int start).
