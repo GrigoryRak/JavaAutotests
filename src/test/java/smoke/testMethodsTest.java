@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -93,7 +94,8 @@ public class testMethodsTest {
         Collections.shuffle(resultList);
         String[] arrayOfWords = resultList.toArray(new String[0]);
         // Передаем массив в тест как единый аргумент
-        return Stream.of(Arguments.arguments((Object) arrayOfWords));
+        // Добавил передачу второго массива для теста метода removeSpecificNameTest
+        return Stream.of(Arguments.arguments((Object) arrayOfWords, (Object) arrayOfWords));
     }
 
     @ParameterizedTest
@@ -104,6 +106,60 @@ public class testMethodsTest {
         System.out.println("Массив слов ["  + String.join(", ", words) + "] -> " + hasBug);
     }
 
+    @RepeatedTest(5)
+    @DisplayName("Тестирование метода, который возвращает чётные значения из диапазона чисел")
+    void getEvenInRangeTest() {
+        int startRandomNum = ThreadLocalRandom.current().nextInt(-10, 11);
+        int endRandomNum = ThreadLocalRandom.current().nextInt(12, 22);
+        String getEvenInRangeResult = testMethods.getEvenInRange(startRandomNum,endRandomNum);
+        System.out.println("getEvenInRange - диапазон [" + startRandomNum + " : " + endRandomNum +  "] -> " + getEvenInRangeResult);
+    }
 
+    static Stream<Arguments> intStreamArray() {
+        int[] array = ThreadLocalRandom.current().ints(20, 0, 101).toArray();
+        return Stream.of(Arguments.arguments((Object)array));
+    }
 
+    @ParameterizedTest
+    @MethodSource("intStreamArray")
+    @DisplayName("Тестирование метода, который возвращает самое большое число из массива")
+    void findMaxTest(int[] findMaxArr) {
+        int findMaxResult = testMethods.findMax(findMaxArr);
+        System.out.println("Массив значений "  + java.util.Arrays.toString(findMaxArr) + " Максимальное число -> " + findMaxResult);
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateRandomWordsWithBugArray")
+    @DisplayName("Тестирование метода, который возвращает перевёрнутый массив")
+    void reverseTest(String[] words) {
+        String reverseResult = Arrays.toString(testMethods.reverse(words));
+        System.out.println("Оригинальный массив слов ["  + String.join(", ", words) + "] ->  Зеркальный массив слов " + reverseResult);
+    }
+
+    @ParameterizedTest
+    @MethodSource("intStreamArray")
+    @DisplayName("Тестирование метода, который вычисляет и возвращает среднее арифметическое всех чисел в списке")
+    void calcAverageTest(int[] numbersArray) {
+        List<Integer> numbersArrayList = Arrays.stream(numbersArray)
+                .boxed()
+                // Массив в список
+                .toList();
+        double calcAverageResult = testMethods.calcAverage(numbersArrayList);
+        System.out.println("Массив значений "  + java.util.Arrays.toString(numbersArray) + " Среднее арифмитическое -> " + calcAverageResult);
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateRandomWordsWithBugArray")
+    @DisplayName("Тестирование метода, который исключает слово из списка")
+    void removeSpecificNameTest(String[] startArray, String[] removeWordArray) {
+        List<String> startArrayList = Arrays.stream(startArray).toList();
+
+        // тот же самы массив, но из него я произвольно вытаскиваю любое слов
+        List<String> removeWordArrayList = Arrays.stream(removeWordArray).toList();
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, removeWordArrayList.size());
+        String randomWord = removeWordArrayList.get(randomIndex);
+
+        List removeSpecificNameResult = testMethods.removeSpecificName(startArrayList, randomWord);
+        System.out.println("Оригинальный список слов ["  + String.join(", ", startArray) + "] ->  Список " + removeSpecificNameResult + " с удаленным словом  " + randomWord);
+    }
 }
