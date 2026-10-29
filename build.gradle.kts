@@ -34,6 +34,7 @@ configurations.all {
 }
 
 val printTestOver = tasks.register("printTestOver") {
+    mustRunAfter(tasks.test)
     doLast {
         println("Test run is over")
     }
@@ -47,8 +48,13 @@ tasks.test {
     // Формирует запуск следующей задачи, после завершения первой
     finalizedBy(printTestOver)
 
+    systemProperty("file.encoding", "UTF-8")
+    systemProperty("sun.stdout.encoding", "UTF-8")
+    systemProperty("sun.stderr.encoding", "UTF-8")
+
     // Показывать детализацию тестов в консоли при сборке
     testLogging {
         events("passed", "skipped", "failed")
+        showStandardStreams = true
     }
 }
