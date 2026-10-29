@@ -1,7 +1,10 @@
 package smoke;
 
 import methods.testMethods;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,10 +14,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class testMethodsTest {
+public class testMethodsTask2 {
 
     @BeforeEach
     void startTest() {
@@ -25,34 +27,6 @@ public class testMethodsTest {
     void endTest() {
         System.out.println("Test method end");
         System.out.println("========================");
-    }
-
-    @Test
-    @DisplayName("boolean isEven(int n) — запустить метод один раз со случайным числом от 1 до 100")
-    void isEvenTest() {
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
-        boolean isEven = testMethods.isEven(randomNum);
-        System.out.println("isEven(" + randomNum + ") -> " + isEven);
-    }
-
-    @RepeatedTest(20)
-    @DisplayName("String checkAccess(int age) — запустить метод 20 раз со случайными числами от 0 до 99;")
-    void checkAccessTest() {
-        int randomNum = ThreadLocalRandom.current().nextInt(0, 100);
-        String checkAccessResult = testMethods.checkAccess(randomNum);
-        System.out.println("Случайный возраст (" + randomNum + ") -> " + checkAccessResult);
-    }
-
-    static IntStream intArray() {
-        return ThreadLocalRandom.current().ints(20, 0, 101);
-    }
-
-    @ParameterizedTest
-    @MethodSource("intArray")
-    @DisplayName("String getGrade(int score) — запустить метод в параметризованных тестах с массивом случайных чисел от 0 до 100;")
-    void getGradeTest(int score) {
-        String getGrade = testMethods.getGrade(score);
-        System.out.println("Входит в границу (" + score + ") -> " + getGrade);
     }
 
     @RepeatedTest(10)
