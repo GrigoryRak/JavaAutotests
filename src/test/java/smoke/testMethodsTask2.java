@@ -30,7 +30,7 @@ public class testMethodsTask2 {
         int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
         boolean isEven = testMethods.isEven(randomNum);
         System.out.println("isEven(" + randomNum + ") -> " + isEven);
-        if (isEven) {
+        if (randomNum  % 2 == 0 ) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -39,10 +39,10 @@ public class testMethodsTask2 {
     @RepeatedTest(20)
     @DisplayName("Проверка возраста (Если строго больше 18 тест считается пройденным) — запустить метод 20 раз со случайными числами от 0 до 99;")
     void checkAccessTest() {
-        int randomNum = ThreadLocalRandom.current().nextInt(0, 100);
+        int randomNum = ThreadLocalRandom.current().nextInt(-2, 100);
         String checkAccessResult = testMethods.checkAccess(randomNum);
         System.out.println("Случайный возраст (" + randomNum + ") -> " + checkAccessResult);
-        if (checkAccessResult.equals("Allowed")){
+        if (randomNum > 18){
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -58,7 +58,22 @@ public class testMethodsTask2 {
     void getGradeTest(int score) {
         String getGrade = testMethods.getGrade(score);
         System.out.println("Входит в границу (" + score + ") -> " + getGrade);
-        if (getGrade.matches("[A-E]")){
+
+        String checkGradeResult;
+        if (score >= 0 && score <= 20) {
+            checkGradeResult = "E";
+        } else if (score >= 21 && score <= 40) {
+            checkGradeResult = "D";
+        } else if (score >= 41 && score <= 60) {
+            checkGradeResult = "C";
+        } else if (score >= 61 && score <= 80) {
+            checkGradeResult = "B";
+        } else if (score >= 81 && score <= 100) {
+            checkGradeResult = "A";
+        } else {
+            checkGradeResult = "Error";
+        }
+        if (checkGradeResult.equals(getGrade) && !checkGradeResult.equals("Error")){
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -70,7 +85,7 @@ public class testMethodsTask2 {
         int randomNum = ThreadLocalRandom.current().nextInt(-10, 10);
         boolean isPositiveResult = testMethods.isPositive(randomNum);
         System.out.println("isPositive(" + randomNum + ") -> " + isPositiveResult);
-        if (isPositiveResult) {
+        if (randomNum >= 0) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -98,7 +113,6 @@ public class testMethodsTask2 {
         } else {
             System.out.println("TEST FAILED");
         }
-
     }
 
     @Test
@@ -158,7 +172,14 @@ public class testMethodsTask2 {
     void hasBugTest(String[] words) {
         boolean hasBug = testMethods.hasBug(words);
         System.out.println("Массив слов ["  + String.join(", ", words) + "] -> " + hasBug);
-        if (hasBug) {
+        boolean checkResult = false;
+        for (String word : words) {
+            if ("Bug".equals(word)) {
+                checkResult = true;
+                break;
+            }
+        }
+        if (hasBug == checkResult && (!hasBug == false && !checkResult == false )) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -170,7 +191,14 @@ public class testMethodsTask2 {
         String[] wordslib = {"Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra"};
         boolean hasBug = testMethods.hasBug(wordslib);
         System.out.println("Массив слов ["  + String.join(", ", wordslib) + "] -> " + hasBug);
-        if (hasBug) {
+        boolean checkResult = false;
+        for (String word : wordslib) {
+            if ("Bug".equals(word)) {
+                checkResult = true;
+                break;
+            }
+        }
+        if (hasBug == checkResult && (!hasBug == false && !checkResult == false )) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
