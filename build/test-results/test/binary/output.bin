@@ -1,0 +1,124 @@
++========================Test method start
+isEven(1) -> false
+Test method end
+========================
++========================Test method start
+isEven(1) -> false
+Test method end
+========================
++========================Test method start
+isEven(1) -> false
+Test method end
+========================
++========================Test method start
+isEven(1) -> false
+Test method end
+========================
++========================Test method start
+isEven(1) -> false
+Test method end
+========================
++========================Test method start
+isEven(1) -> false
+Test method end
+========================
++========================Test method start
+isEven(1) -> false
+Test method end
+========================
+	+========================Test method start
+	isEven(1) -> false
+	Test method end
+	========================
+
++========================Test method start
+
+isEven(1) -> false
+
+Test method end
+
+========================
++========================Test method start
+isEven(1) -> false
+Test method end
+========================
++========================Test method start
+isEven(49) -> false
+Test method end
+========================
++========================Test method start
+isEven(21) -> false
+Test method end
+========================
++========================Test method start
+isEven(20) -> true
+Test method end
+========================
++========================Test method start
+isEven(68) -> true
+Test method end
+========================
++========================Test method start
+isEven(23) -> false
+Test method end
+========================
++========================Test method start
+isEven(68) -> true
+Test method end
+========================
++========================Test method start
+isEven(59) -> false
+Test method end
+========================
++========================Test method start
+isEven(44) -> true
+Test method end
+========================
++========================Test method start
+isEven(85) -> false
+Test method end
+========================
++========================Test method start
+isEven(74) -> true
+Test method end
+========================
++========================Test method start
+isEven(40) -> true
+Test method end
+========================
++========================Test method start
+isEven(60) -> true
+Test method end
+========================
++========================Test method start
+isEven(7) -> false
+Test method end
+========================
++========================Test method start
+isEven(97) -> false
+Test method end
+========================
++========================Test method start
+isEven(48) -> true
+Test method end
+========================
++========================Test method start
+isEven(49) -> false
+Test method end
+========================
++========================Test method start
+isEven(46) -> true
+Test method end
+========================
++========================Test method start
+isEven(54) -> true
+Test method end
+========================
++========================Test method start
+isEven(91) -> false
+Test method end
+========================
++========================Test method start
+isEven(48) -> true
+Test method end
+========================
