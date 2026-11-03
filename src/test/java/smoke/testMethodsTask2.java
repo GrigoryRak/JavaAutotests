@@ -30,7 +30,10 @@ public class testMethodsTask2 {
         int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
         boolean isEven = testMethods.isEven(randomNum);
         System.out.println("isEven(" + randomNum + ") -> " + isEven);
-        if (randomNum  % 2 == 0 ) {
+
+        boolean checkResult = (randomNum  % 2 == 0);
+
+        if (isEven && checkResult) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -42,7 +45,13 @@ public class testMethodsTask2 {
         int randomNum = ThreadLocalRandom.current().nextInt(-2, 100);
         String checkAccessResult = testMethods.checkAccess(randomNum);
         System.out.println("Случайный возраст (" + randomNum + ") -> " + checkAccessResult);
-        if (randomNum > 18){
+
+        String checkAgeResult = "";
+        if (randomNum > 18) {
+            checkAgeResult = "Allowed";
+        } else checkAgeResult = "Denied";
+
+        if (checkAccessResult.equals(checkAgeResult) && checkAgeResult.equals("Allowed")){
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -85,7 +94,10 @@ public class testMethodsTask2 {
         int randomNum = ThreadLocalRandom.current().nextInt(-10, 10);
         boolean isPositiveResult = testMethods.isPositive(randomNum);
         System.out.println("isPositive(" + randomNum + ") -> " + isPositiveResult);
-        if (randomNum >= 0) {
+
+        boolean checkResult = (randomNum >= 0);
+
+        if (isPositiveResult && checkResult) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");

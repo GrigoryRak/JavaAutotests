@@ -1,27 +1,5 @@
 +========================Test method start
+isEven(95) -> false
+TEST FAILED
 Test method end
 ========================
-+========================Test method start
-aСписок на вход: [Test, Autotest, Java, Gradle, Bug, Abra, Run, KoKo, Suite, Codabra]
-pСписок с удаленным словом: [Test, Autotest, Java, Gradle, Bug, Abra, Run, Suite, Codabra]
-�Проверочный список с удаленным словом: [Test, Autotest, Java, Gradle, Bug, Abra, Run, Suite, Codabra]
-(Слово на удаление: KoKo
-Test method end
-========================
-+========================Test method start
-aСписок на вход: [Test, Autotest, Java, Gradle, Bug, Abra, Run, KoKo, Suite, Codabra]
-pСписок с удаленным словом: [Test, Autotest, Java, Gradle, Bug, Abra, Run, Suite, Codabra]
-�Проверочный список с удаленным словом: [Test, Autotest, Java, Gradle, Bug, Abra, Run, Suite, Codabra]
-(Слово на удаление: KoKo
-Test method end
-========================
-+========================Test method start
-aСписок на вход: [Test, Autotest, Java, Gradle, Bug, Abra, Run, KoKo, Suite, Codabra]
-pСписок с удаленным словом: [Test, Autotest, Java, Gradle, Bug, Abra, Run, Suite, Codabra]
-�Проверочный список с удаленным словом: [Test, Autotest, Java, Gradle, Bug, Abra, Run, Suite, Codabra]
-(Слово на удаление: KoKo
-Test method end
-========================
-+========================Test method start
-Test method end
-========================
