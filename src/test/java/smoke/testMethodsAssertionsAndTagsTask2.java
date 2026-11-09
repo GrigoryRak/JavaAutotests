@@ -1,15 +1,14 @@
 package smoke;
 
 import methods.testMethods;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,6 +57,41 @@ public class testMethodsAssertionsAndTagsTask2 {
         assertThat(minAge)
                 .as("Возраст менее или равен 18 годам. Значение на вход: " + randomNum)
                 .isTrue();
+    }
+
+    static IntStream intArray() {
+        return ThreadLocalRandom.current().ints(10, 0, 301);
+    }
+
+    @ParameterizedTest
+    @MethodSource("intArray")
+    @DisplayName("String getGrade(int score) — запустить метод в параметризованных тестах с массивом случайных чисел от 0 до 100 и проверить на вхождение в границы;")
+    void getGradeTest(int score) {
+
+        String getGrade = testMethods.getGrade(score);
+        System.out.println("Входит в границу (" + score + ") -> " + getGrade);
+
+        String checkGradeResult;
+        if (score >= 0 && score <= 20) {
+            checkGradeResult = "K";
+        } else if (score >= 21 && score <= 40) {
+            checkGradeResult = "D";
+        } else if (score >= 41 && score <= 60) {
+            checkGradeResult = "C";
+        } else if (score >= 61 && score <= 80) {
+            checkGradeResult = "B";
+        } else if (score >= 81 && score <= 100) {
+            checkGradeResult = "A";
+        } else {
+            checkGradeResult = "Error";
+        }
+
+        Assertions.assertAll("Проверяем число на вход и результат метода",
+                () -> Assertions.assertTrue(score >= 0 && score <= 100,
+                        () -> "Число на вход " + score + " вышло за пределы диапазона [0, 100]!"),
+                () -> Assertions.assertEquals(checkGradeResult, getGrade,
+                        String.format("Ошибка вхождения в диапазон чисел %d! Ожидался диапазон: %s, но получен из метода: %s", score, checkGradeResult, getGrade))
+        );
     }
 
     @RepeatedTest(10)
