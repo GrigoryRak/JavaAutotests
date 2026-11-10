@@ -193,9 +193,99 @@ public class testMethodsAssertionsAndTagsTask2 {
 
         Assertions.assertAll("Массивы на вход не содержат слова Bug",
                 () -> Assertions.assertEquals(finalCheckResult, finalHasBug, ""),
-                        () -> Assertions.assertTrue(finalCheckResult, "В проверочном массиве не найдено слова Bug"),
-                        () -> Assertions.assertTrue(finalHasBug, "В массиве метода не найдено слова Bug")
+                () -> Assertions.assertTrue(finalCheckResult, "В проверочном массиве не найдено слова Bug"),
+                () -> Assertions.assertTrue(finalHasBug, "В массиве метода не найдено слова Bug")
         );
+    }
+
+    @RepeatedTest(10)
+    @DisplayName("Тестирование метода, который возвращает чётные значения из диапазона чисел")
+    void getEvenInRangeTest() {
+        int startRandomNum = ThreadLocalRandom.current().nextInt(-10, 11);
+        int endRandomNum = ThreadLocalRandom.current().nextInt(12, 23);
+        String getEvenInRangeResult = testMethods.getEvenInRange(startRandomNum, endRandomNum);
+        System.out.println("getEvenInRange - диапазон [" + startRandomNum + " : " + endRandomNum + "] -> " + getEvenInRangeResult);
+
+        java.util.StringJoiner result = new java.util.StringJoiner(" ");
+        for (int i = startRandomNum; i <= endRandomNum; i++) {
+            if (i % 2 == 0) {
+                result.add(String.valueOf(i));
+            }
+        }
+        String resultStr = result.toString();
+        System.out.println("Контрольная проверка диапазона -> " + resultStr);
+
+        Assertions.assertAll("Проверка возвращаемого диапазона чётных чисел",
+                () -> Assertions.assertEquals(resultStr, getEvenInRangeResult,
+                        () -> "Ошибка для диапазона [" + startRandomNum + " : " + endRandomNum + "]. "
+                                + "Ожидалось: '" + resultStr + "', но получено: '" + getEvenInRangeResult + "'")
+        );
+    }
+
+
+    static Stream<Arguments> intStreamArray() {
+        return Stream.generate(() -> {
+                    int[] array = ThreadLocalRandom.current().ints(10, 0, 101).toArray();
+                    return Arguments.arguments((Object) array);
+                })
+                .limit(10);
+    }
+
+    @ParameterizedTest
+    @MethodSource("intStreamArray")
+    @DisplayName("Тестирование метода, который возвращает самое большое число из массива")
+    void findMaxTest(int[] findMaxArr) {
+        int findMaxResult = testMethods.findMax(findMaxArr);
+        System.out.println("Массив значений " + java.util.Arrays.toString(findMaxArr) + " Максимальное число -> " + findMaxResult);
+
+        int findMaxCheck = java.util.Arrays.stream(findMaxArr).max().getAsInt();
+        System.out.println("Контрольное максимальное число -> " + findMaxCheck);
+
+        Assertions.assertEquals(findMaxCheck, findMaxResult,
+                () -> "Ошибка для массива " + java.util.Arrays.toString(findMaxArr) + ". "
+                        + "Ожидалось максимальное число: " + findMaxCheck
+                        + ", но метод вернул: " + findMaxResult);
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateRandomWordsWithBugArray")
+    @DisplayName("Тестирование метода, который возвращает перевёрнутый массив")
+    void reverseTest(String[] words) {
+        String[] reverseResultArr = testMethods.reverse(words);
+        String reverseResult = Arrays.toString(reverseResultArr);
+        System.out.println("Оригинальный массив слов [" + String.join(", ", words) + "] ->  Зеркальный массив слов " + reverseResult);
+
+        String[] mirrorCheck = new String[words.length];
+        for (int i = 0; i < words.length; i++) {
+            mirrorCheck[i] = words[words.length - 1 - i];
+        }
+        String mirrorCheckResult = Arrays.toString(mirrorCheck);
+        System.out.println("Контрольный перевёрнутый массив -> " + mirrorCheckResult);
+
+        Assertions.assertArrayEquals(mirrorCheck, reverseResultArr, "Массивы должны быть идентичны");
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("intStreamArray")
+    @DisplayName("Тестирование метода, который вычисляет и возвращает среднее арифметическое всех чисел в списке")
+    void calcAverageTest(int[] numbersArray) {
+        List<Integer> numbersArrayList = Arrays.stream(numbersArray)
+                .boxed()
+                // Массив в список
+                .toList();
+        double calcAverageResult = testMethods.calcAverage(numbersArrayList);
+        System.out.println("Массив значений " + java.util.Arrays.toString(numbersArray) + " Среднее арифмитическое -> " + calcAverageResult);
+
+        double sum = 0;
+        for (int num : numbersArrayList) {
+            sum += num;
+        }
+        double calcAverageCheck = sum / numbersArrayList.size();
+        System.out.println("Контрольная проверка среднего арифметического значения -> " + calcAverageCheck);
+
+        Assertions.assertEquals(calcAverageCheck, calcAverageResult,
+                "Среднее арифметическое вычислено неверно!");
     }
 
     @RepeatedTest(10)
