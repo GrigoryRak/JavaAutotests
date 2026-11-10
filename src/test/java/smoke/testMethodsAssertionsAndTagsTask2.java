@@ -3,12 +3,14 @@ package smoke;
 import methods.testMethods;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +40,7 @@ public class testMethodsAssertionsAndTagsTask2 {
         int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
         boolean isEven = testMethods.isEven(randomNum);
         System.out.println("isEven(" + randomNum + ") -> " + isEven);
-        boolean checkResult = (randomNum  % 2 == 0 );
+        boolean checkResult = (randomNum % 2 == 0);
         try {
             assertTrue(checkResult, String.format("Тест проверяет метод проверки чётности числа. На вход пришло нечётное число - %d. Метод возвращает - %s", randomNum, isEven));
         } catch (AssertionError e) {
@@ -95,6 +97,108 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @RepeatedTest(10)
+    @DisplayName("Тестирование метода по возврату true, если переданное число больше или равно нулю, и false, если переданное число меньше нуля.")
+    void isPositiveTest() {
+        int randomNum = ThreadLocalRandom.current().nextInt(-10, 10);
+        boolean checkResult = (randomNum >= 0);
+
+        boolean isPositiveResult = testMethods.isPositive(randomNum);
+        System.out.println("isPositive(" + randomNum + ") -> " + isPositiveResult);
+
+        Assertions.assertTrue(checkResult && isPositiveResult,
+                () -> "Число оказалось строго меньше нуля " + randomNum + "\n"
+                        + "Проверка теста вернула " + checkResult + "\n"
+                        + "Метод вернул " + isPositiveResult);
+    }
+
+    @RepeatedTest(10)
+    @DisplayName("Тестирование метода, который принимает стартовое число (например, 5) и возвращает строку со всеми числами до 1 и словом «Поехали!» в конце (например, «5 4 3 2 1 Поехали!»).")
+    void blastOffTest() {
+        int randomNum = ThreadLocalRandom.current().nextInt(-1, 10);
+        String blastOffResult = testMethods.blastOff(randomNum);
+        System.out.println("blastOff(" + randomNum + ") -> " + blastOffResult);
+
+        String keyWord;
+        if (randomNum >= 1) {
+            StringJoiner sj = new StringJoiner(" ");
+            for (int i = randomNum; i >= 1; i--) sj.add(String.valueOf(i));
+            sj.add("Поехали!");
+            keyWord = sj.toString();
+        } else {
+            keyWord = "Поехали!";
+        }
+
+        System.out.println("Контрольная проверка вывода -> " + keyWord);
+
+        Assertions.assertTrue(keyWord.equalsIgnoreCase(blastOffResult),
+                () -> "Значение на вход " + randomNum + "\n"
+                        + "Ответ полученный из метода: " + blastOffResult + "\n"
+                        + "Текст проверки: " + keyWord);
+    }
+
+    @RepeatedTest(10)
+    @DisplayName("Тестирование метода, который возвращает сумму всех целых чисел от 1 до n")
+    void sumToNTest() {
+        int randomNum = ThreadLocalRandom.current().nextInt(-1, 5);
+        int sumToNResult = testMethods.sumToN(randomNum);
+        System.out.println("sumToN(" + randomNum + ") -> " + sumToNResult);
+
+        int checkResultSum = (randomNum < 1) ? 0 : ((randomNum * (randomNum + 1)) / 2);
+
+        Assertions.assertEquals(checkResultSum, sumToNResult);
+
+        Assertions.assertNotEquals(0, sumToNResult,
+                () -> "Ошибка! Метод вернул 0 для числа " + randomNum + ", а 0 возвращаться не должен.");
+    }
+
+    static Stream<Arguments> generateRandomWordsWithBugArray() {
+        String[] wordslib = {"Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra"};
+        return Stream.generate(() -> {
+                    List<String> resultList = new ArrayList<>();
+                    int totalCount = ThreadLocalRandom.current().nextInt(3, 11);
+//           resultList.add("Bug");
+
+                    for (int i = 1; i < totalCount; i++) {
+                        int randomIndex = ThreadLocalRandom.current().nextInt(0, wordslib.length);
+                        resultList.add(wordslib[randomIndex]);
+                    }
+
+                    // Делаем размес слов
+                    Collections.shuffle(resultList);
+                    String[] arrayOfWords = resultList.toArray(new String[0]);
+                    // Передаем массив в тест как единый аргумент
+                    // Добавил передачу второго массива для теста метода removeSpecificNameTest
+                    return Arguments.arguments((Object) arrayOfWords, (Object) arrayOfWords);
+                })
+                .limit(10); // <-- Ограничиваем поток ровно 10 итерациями
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateRandomWordsWithBugArray")
+    @DisplayName("Тест метода, который проверяет наличие слова Bug")
+    void hasBugTest(String[] words) {
+        boolean hasBug = testMethods.hasBug(words);
+        System.out.println("Массив слов [" + String.join(", ", words) + "] -> " + hasBug);
+        boolean checkResult = false;
+        for (String word : words) {
+            if ("Bug".equals(word)) {
+                checkResult = true;
+                break;
+            }
+        }
+
+        final String[] finalWords = words;
+        final boolean finalCheckResult = checkResult;
+        final boolean finalHasBug = hasBug;
+
+        Assertions.assertAll("Массивы на вход не содержат слова Bug",
+                () -> Assertions.assertEquals(finalCheckResult, finalHasBug, ""),
+                        () -> Assertions.assertTrue(finalCheckResult, "В проверочном массиве не найдено слова Bug"),
+                        () -> Assertions.assertTrue(finalHasBug, "В массиве метода не найдено слова Bug")
+        );
+    }
+
+    @RepeatedTest(10)
     @DisplayName("Тестирование метода, который исключает слово из списка")
     void removeSpecificNameTestSuccess() {
         List<String> startList = List.of("Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra");
@@ -106,14 +210,14 @@ public class testMethodsAssertionsAndTagsTask2 {
         if (!startList.contains(randomWord)) {
             try {
                 List checkList = testMethods.removeSpecificName(startList, randomWord);
-                fail ("Слова на удаление " + randomWord + " нет в исходном списке: " + startList + "\n" + "Проверка вернула список без изменения: " + checkList);
-            } catch(NoSuchElementException e) {
+                fail("Слова на удаление " + randomWord + " нет в исходном списке: " + startList + "\n" + "Проверка вернула список без изменения: " + checkList);
+            } catch (NoSuchElementException e) {
             }
         } else {
             List removeSpecificNameResult = testMethods.removeSpecificName(startList, randomWord);
             List<String> checkList = new java.util.ArrayList<>(startList);
             checkList.removeAll(java.util.Collections.singleton(randomWord));
-            System.out.println("Список на вход: "  + startList + "\n"
+            System.out.println("Список на вход: " + startList + "\n"
                     + "Список с удаленным словом: " + removeSpecificNameResult + "\n"
                     + "Проверочный список с удаленным словом: " + checkList + "\n"
                     + "Слово на удаление: " + randomWord);
@@ -131,7 +235,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     @DisplayName("Тестирование метода, который исключает слово из списка. Тест с намеренной ошибкой - 50/50")
     void removeSpecificNameTestFail() {
         List<String> startList = List.of("Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra");
-        List<String> startListFail = List.of("Test","Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra", "KukU");
+        List<String> startListFail = List.of("Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra", "KukU");
         List<String> removeWordList = List.of("Test", "KoKo", "KvaKva");
 
         int randomIndex = ThreadLocalRandom.current().nextInt(0, removeWordList.size());
@@ -140,14 +244,14 @@ public class testMethodsAssertionsAndTagsTask2 {
         if (!startList.contains(randomWord)) {
             try {
                 List checkList = testMethods.removeSpecificName(startList, randomWord);
-                fail ("Слова на удаление " + randomWord + " нет в исходном списке: " + startList + "\n" + "Проверка вернула список без изменения: " + checkList);
-            } catch(NoSuchElementException e) {
+                fail("Слова на удаление " + randomWord + " нет в исходном списке: " + startList + "\n" + "Проверка вернула список без изменения: " + checkList);
+            } catch (NoSuchElementException e) {
             }
         } else {
             List removeSpecificNameResult = testMethods.removeSpecificName(startListFail, randomWord);
             List<String> checkList = new java.util.ArrayList<>(startList);
             checkList.removeAll(java.util.Collections.singleton(randomWord));
-            System.out.println("Список на вход: "  + startList + "\n"
+            System.out.println("Список на вход: " + startList + "\n"
                     + "Список с удаленным словом: " + removeSpecificNameResult + "\n"
                     + "Проверочный список с удаленным словом: " + checkList + "\n"
                     + "Слово на удаление: " + randomWord);

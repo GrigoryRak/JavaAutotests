@@ -31,7 +31,7 @@ public class testMethodsTask2 {
         boolean isEven = testMethods.isEven(randomNum);
         System.out.println("isEven(" + randomNum + ") -> " + isEven);
 
-        boolean checkResult = (randomNum  % 2 == 0);
+        boolean checkResult = (randomNum % 2 == 0);
 
         if (isEven && checkResult) {
             System.out.println("TEST PASSED");
@@ -51,7 +51,7 @@ public class testMethodsTask2 {
             checkAgeResult = "Allowed";
         } else checkAgeResult = "Denied";
 
-        if (checkAccessResult.equals(checkAgeResult) && checkAgeResult.equals("Allowed")){
+        if (checkAccessResult.equals(checkAgeResult) && checkAgeResult.equals("Allowed")) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -82,7 +82,7 @@ public class testMethodsTask2 {
         } else {
             checkGradeResult = "Error";
         }
-        if (checkGradeResult.equals(getGrade) && !checkGradeResult.equals("Error")){
+        if (checkGradeResult.equals(getGrade) && !checkGradeResult.equals("Error")) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -110,12 +110,14 @@ public class testMethodsTask2 {
         String blastOffResult = testMethods.blastOff(randomNum);
         System.out.println("blastOff(" + randomNum + ") -> " + blastOffResult);
 
-        String keyWord = "Поехали!";
+        String keyWord;
         if (randomNum >= 1) {
             StringJoiner sj = new StringJoiner(" ");
             for (int i = randomNum; i >= 1; i--) sj.add(String.valueOf(i));
             sj.add("Поехали!");
             keyWord = sj.toString();
+        } else {
+            keyWord = "Поехали!";
         }
 
         System.out.println("Контрольная проверка вывода -> " + keyWord);
@@ -136,7 +138,7 @@ public class testMethodsTask2 {
 
         int checkResultSum = (randomNum < 1) ? 0 : ((randomNum * (randomNum + 1)) / 2);
 
-        if (sumToNResult == checkResultSum){
+        if (sumToNResult == checkResultSum) {
             System.out.println("TEST PASSED");
         } else {
             System.out.println("TEST FAILED");
@@ -152,7 +154,7 @@ public class testMethodsTask2 {
 
         int checkResultSum = (randomNum < 1) ? 0 : ((randomNum * (randomNum + 1)) / 2);
 
-        if (sumToNResult == checkResultSum){
+        if (sumToNResult == checkResultSum) {
             System.out.println("TEST PASSED");
         } else {
             System.out.println("TEST FAILED");
@@ -161,21 +163,25 @@ public class testMethodsTask2 {
 
     static Stream<Arguments> generateRandomWordsWithBugArray() {
         String[] wordslib = {"Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra"};
-        List<String> resultList = new ArrayList<>();
-        int totalCount = ThreadLocalRandom.current().nextInt(3, 11);
-//        resultList.add("Bug");
+        return Stream.generate(() -> {
+                    List<String> resultList = new ArrayList<>();
+                    int totalCount = ThreadLocalRandom.current().nextInt(3, 11);
+//           resultList.add("Bug");
 
-        for (int i = 1; i < totalCount; i++) {
-            int randomIndex = ThreadLocalRandom.current().nextInt(0, wordslib.length);
-            resultList.add(wordslib[randomIndex]);
-        }
+                    for (int i = 1; i < totalCount; i++) {
+                        int randomIndex = ThreadLocalRandom.current().nextInt(0, wordslib.length);
+                        resultList.add(wordslib[randomIndex]);
+                    }
 
-        // Делаем размес слов
-        Collections.shuffle(resultList);
-        String[] arrayOfWords = resultList.toArray(new String[0]);
-        // Передаем массив в тест как единый аргумент
-        // Добавил передачу второго массива для теста метода removeSpecificNameTest
-        return Stream.of(Arguments.arguments((Object) arrayOfWords, (Object) arrayOfWords));
+                    // Делаем размес слов
+                    Collections.shuffle(resultList);
+                    String[] arrayOfWords = resultList.toArray(new String[0]);
+                    // Передаем массив в тест как единый аргумент
+                    // Добавил передачу второго массива для теста метода removeSpecificNameTest
+//           return Stream.of(Arguments.arguments((Object) arrayOfWords, (Object) arrayOfWords));
+                    return Arguments.arguments((Object) arrayOfWords, (Object) arrayOfWords);
+                })
+                .limit(10); // <-- Ограничиваем поток ровно 10 итерациями
     }
 
     @ParameterizedTest
@@ -183,7 +189,7 @@ public class testMethodsTask2 {
     @DisplayName("Тест метода, который проверяет наличие слова Bug")
     void hasBugTest(String[] words) {
         boolean hasBug = testMethods.hasBug(words);
-        System.out.println("Массив слов ["  + String.join(", ", words) + "] -> " + hasBug);
+        System.out.println("Массив слов [" + String.join(", ", words) + "] -> " + hasBug);
         boolean checkResult = false;
         for (String word : words) {
             if ("Bug".equals(word)) {
@@ -191,7 +197,7 @@ public class testMethodsTask2 {
                 break;
             }
         }
-        if (hasBug == checkResult && (!hasBug == false && !checkResult == false )) {
+        if (hasBug == checkResult && (!hasBug == false && !checkResult == false)) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -202,7 +208,7 @@ public class testMethodsTask2 {
     void searchBugWordTest() {
         String[] wordslib = {"Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra"};
         boolean hasBug = testMethods.hasBug(wordslib);
-        System.out.println("Массив слов ["  + String.join(", ", wordslib) + "] -> " + hasBug);
+        System.out.println("Массив слов [" + String.join(", ", wordslib) + "] -> " + hasBug);
         boolean checkResult = false;
         for (String word : wordslib) {
             if ("Bug".equals(word)) {
@@ -210,7 +216,7 @@ public class testMethodsTask2 {
                 break;
             }
         }
-        if (hasBug == checkResult && (!hasBug == false && !checkResult == false )) {
+        if (hasBug == checkResult && (!hasBug == false && !checkResult == false)) {
             System.out.println("TEST PASSED");
         } else
             System.out.println("TEST FAILED");
@@ -221,8 +227,8 @@ public class testMethodsTask2 {
     void getEvenInRangeTest() {
         int startRandomNum = ThreadLocalRandom.current().nextInt(-10, 11);
         int endRandomNum = ThreadLocalRandom.current().nextInt(12, 22);
-        String getEvenInRangeResult = testMethods.getEvenInRange(startRandomNum,endRandomNum);
-        System.out.println("getEvenInRange - диапазон [" + startRandomNum + " : " + endRandomNum +  "] -> " + getEvenInRangeResult);
+        String getEvenInRangeResult = testMethods.getEvenInRange(startRandomNum, endRandomNum);
+        System.out.println("getEvenInRange - диапазон [" + startRandomNum + " : " + endRandomNum + "] -> " + getEvenInRangeResult);
 
         java.util.StringJoiner result = new java.util.StringJoiner(" ");
         for (int i = startRandomNum; i <= endRandomNum; i++) {
@@ -241,7 +247,7 @@ public class testMethodsTask2 {
 
     static Stream<Arguments> intStreamArray() {
         int[] array = ThreadLocalRandom.current().ints(20, 0, 101).toArray();
-        return Stream.of(Arguments.arguments((Object)array));
+        return Stream.of(Arguments.arguments((Object) array));
     }
 
     @ParameterizedTest
@@ -249,7 +255,7 @@ public class testMethodsTask2 {
     @DisplayName("Тестирование метода, который возвращает самое большое число из массива")
     void findMaxTest(int[] findMaxArr) {
         int findMaxResult = testMethods.findMax(findMaxArr);
-        System.out.println("Массив значений "  + java.util.Arrays.toString(findMaxArr) + " Максимальное число -> " + findMaxResult);
+        System.out.println("Массив значений " + java.util.Arrays.toString(findMaxArr) + " Максимальное число -> " + findMaxResult);
 
         int findMaxCheck = java.util.Arrays.stream(findMaxArr).max().getAsInt();
         System.out.println("Контрольное максимальное число -> " + findMaxCheck);
@@ -266,11 +272,11 @@ public class testMethodsTask2 {
     @DisplayName("Тестирование метода, который возвращает перевёрнутый массив")
     void reverseTest(String[] words) {
         String reverseResult = Arrays.toString(testMethods.reverse(words));
-        System.out.println("Оригинальный массив слов ["  + String.join(", ", words) + "] ->  Зеркальный массив слов " + reverseResult);
+        System.out.println("Оригинальный массив слов [" + String.join(", ", words) + "] ->  Зеркальный массив слов " + reverseResult);
 
         String[] mirrorCheck = new String[words.length];
-        for (int i=0; i<words.length; i++){
-            mirrorCheck[i]=words[words.length-1-i];
+        for (int i = 0; i < words.length; i++) {
+            mirrorCheck[i] = words[words.length - 1 - i];
         }
         String mirrorCheckResult = Arrays.toString(mirrorCheck);
         System.out.println("Контрольный перевёрнутый массив -> " + mirrorCheckResult);
@@ -291,15 +297,15 @@ public class testMethodsTask2 {
                 // Массив в список
                 .toList();
         double calcAverageResult = testMethods.calcAverage(numbersArrayList);
-        System.out.println("Массив значений "  + java.util.Arrays.toString(numbersArray) + " Среднее арифмитическое -> " + calcAverageResult);
+        System.out.println("Массив значений " + java.util.Arrays.toString(numbersArray) + " Среднее арифмитическое -> " + calcAverageResult);
 
         double sum = 0;
         for (int num : numbersArrayList) {
             sum += num;
         }
-        System.out.println("Контрольная проверка среднего арифметического значения -> " + sum/numbersArrayList.size());
+        System.out.println("Контрольная проверка среднего арифметического значения -> " + sum / numbersArrayList.size());
 
-        if (calcAverageResult == (sum/numbersArrayList.size())) {
+        if (calcAverageResult == (sum / numbersArrayList.size())) {
             System.out.println("TEST PASSED");
         } else {
             System.out.println("TEST FAILED");
@@ -318,7 +324,7 @@ public class testMethodsTask2 {
         String randomWord = removeWordArrayList.get(randomIndex);
 
         List removeSpecificNameResult = testMethods.removeSpecificName(startArrayList, randomWord);
-        System.out.println("Оригинальный список слов ["  + String.join(", ", startArray) + "] ->  Список " + removeSpecificNameResult + " с удаленным словом  " + randomWord);
+        System.out.println("Оригинальный список слов [" + String.join(", ", startArray) + "] ->  Список " + removeSpecificNameResult + " с удаленным словом  " + randomWord);
 
         List<String> checkList = new java.util.ArrayList<>(startArrayList);
         checkList.removeAll(java.util.Collections.singleton(randomWord));
