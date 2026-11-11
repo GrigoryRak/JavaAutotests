@@ -35,6 +35,7 @@ public class testMethodsAssertionsAndTagsTask2 {
 //    или по пакету. Запустить каждый тестовый метод не менее 10 раз.
 
     @RepeatedTest(10)
+    @Tag("workBool")
     @DisplayName("boolean isEven(int n) — запустить метод один раз со случайным числом от 1 до 100 и проверить его на чётность")
     void isEvenTest() {
         int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
@@ -49,6 +50,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @RepeatedTest(10)
+    @Tag("workBool")
     @DisplayName("Проверка возраста (Если строго больше 18 тест считается пройденным) — запустить метод 20 раз со случайными числами от 0 до 99;")
     void checkAccessTest() {
         int randomNum = ThreadLocalRandom.current().nextInt(-2, 100);
@@ -67,6 +69,7 @@ public class testMethodsAssertionsAndTagsTask2 {
 
     @ParameterizedTest
     @MethodSource("intArray")
+    @Tag("workStrings")
     @DisplayName("String getGrade(int score) — запустить метод в параметризованных тестах с массивом случайных чисел от 0 до 100 и проверить на вхождение в границы;")
     void getGradeTest(int score) {
 
@@ -97,6 +100,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @RepeatedTest(10)
+    @Tag("workBool")
     @DisplayName("Тестирование метода по возврату true, если переданное число больше или равно нулю, и false, если переданное число меньше нуля.")
     void isPositiveTest() {
         int randomNum = ThreadLocalRandom.current().nextInt(-10, 10);
@@ -112,6 +116,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @RepeatedTest(10)
+    @Tag("workStrings")
     @DisplayName("Тестирование метода, который принимает стартовое число (например, 5) и возвращает строку со всеми числами до 1 и словом «Поехали!» в конце (например, «5 4 3 2 1 Поехали!»).")
     void blastOffTest() {
         int randomNum = ThreadLocalRandom.current().nextInt(-1, 10);
@@ -137,6 +142,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @RepeatedTest(10)
+    @Tag("workNumbers")
     @DisplayName("Тестирование метода, который возвращает сумму всех целых чисел от 1 до n")
     void sumToNTest() {
         int randomNum = ThreadLocalRandom.current().nextInt(-1, 5);
@@ -174,6 +180,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @ParameterizedTest
+    @Tag("workArray")
     @MethodSource("generateRandomWordsWithBugArray")
     @DisplayName("Тест метода, который проверяет наличие слова Bug")
     void hasBugTest(String[] words) {
@@ -199,6 +206,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @RepeatedTest(10)
+    @Tag("workNumbers")
     @DisplayName("Тестирование метода, который возвращает чётные значения из диапазона чисел")
     void getEvenInRangeTest() {
         int startRandomNum = ThreadLocalRandom.current().nextInt(-10, 11);
@@ -233,6 +241,7 @@ public class testMethodsAssertionsAndTagsTask2 {
 
     @ParameterizedTest
     @MethodSource("intStreamArray")
+    @Tag("workArray")
     @DisplayName("Тестирование метода, который возвращает самое большое число из массива")
     void findMaxTest(int[] findMaxArr) {
         int findMaxResult = testMethods.findMax(findMaxArr);
@@ -249,6 +258,7 @@ public class testMethodsAssertionsAndTagsTask2 {
 
     @ParameterizedTest
     @MethodSource("generateRandomWordsWithBugArray")
+    @Tag("workArray")
     @DisplayName("Тестирование метода, который возвращает перевёрнутый массив")
     void reverseTest(String[] words) {
         String[] reverseResultArr = testMethods.reverse(words);
@@ -268,6 +278,7 @@ public class testMethodsAssertionsAndTagsTask2 {
 
     @ParameterizedTest
     @MethodSource("intStreamArray")
+    @Tag("workList")
     @DisplayName("Тестирование метода, который вычисляет и возвращает среднее арифметическое всех чисел в списке")
     void calcAverageTest(int[] numbersArray) {
         List<Integer> numbersArrayList = Arrays.stream(numbersArray)
@@ -289,6 +300,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @RepeatedTest(10)
+    @Tag("workList")
     @DisplayName("Тестирование метода, который исключает слово из списка")
     void removeSpecificNameTestSuccess() {
         List<String> startList = List.of("Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra");
@@ -322,6 +334,7 @@ public class testMethodsAssertionsAndTagsTask2 {
     }
 
     @RepeatedTest(10)
+    @Tag("workList")
     @DisplayName("Тестирование метода, который исключает слово из списка. Тест с намеренной ошибкой - 50/50")
     void removeSpecificNameTestFail() {
         List<String> startList = List.of("Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra");

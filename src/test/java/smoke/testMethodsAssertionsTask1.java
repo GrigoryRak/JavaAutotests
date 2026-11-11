@@ -33,6 +33,7 @@ public class testMethodsAssertionsTask1 {
 //    При падении ассерты должны дать информацию, что ожидалось и что было получено в результате падения.
 
     @RepeatedTest(10)
+    @Tag("workBool")
     @DisplayName("boolean isEven(int n) — запустить метод один раз со случайным числом от 1 до 100 и проверить его на чётность")
     void isEvenTest() {
         int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
@@ -46,6 +47,7 @@ public class testMethodsAssertionsTask1 {
     }
 
     @RepeatedTest(10)
+    @Tag("workBool")
     @DisplayName("boolean isEven(int n) — запустить метод один раз со случайным числом от 1 до 100 и проверить его на чётность")
     void isEvenCustomTest() {
         int customNum = 1;
@@ -57,6 +59,7 @@ public class testMethodsAssertionsTask1 {
     }
 
     @RepeatedTest(10)
+    @Tag("workBool")
     @DisplayName("boolean isEven(int n) — запустить метод один раз со случайным числом от 1 до 100 и проверить его на чётность")
     void isEvenTestTryCatch() {
         int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
@@ -74,6 +77,7 @@ public class testMethodsAssertionsTask1 {
     }
 
     @RepeatedTest(5)
+    @Tag("workList")
     @DisplayName("Тестирование метода, который исключает слово из списка")
     void removeSpecificNameTestSuccess() {
         List<String> startList = List.of("Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra");
@@ -107,6 +111,7 @@ public class testMethodsAssertionsTask1 {
     }
 
     @RepeatedTest(5)
+    @Tag("workList")
     @DisplayName("Тестирование метода, который исключает слово из списка. Тест с намеренной ошибкой - 50/50")
     void removeSpecificNameTestFail() {
         List<String> startList = List.of("Test", "Autotest", "Java", "Gradle", "Bug", "Abra", "Run", "KoKo", "Suite", "Codabra");

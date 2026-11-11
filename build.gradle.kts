@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.junit.platform.launcher.TagFilter.includeTags
+
 plugins {
     id("java")
 }
@@ -14,6 +16,7 @@ dependencies {
 
     // Подключаем их же для движка запуска тестов
     testRuntimeOnly(fileTree("$projectDir/libs") { include("*.jar") })
+
 }
 
 // Принудительно заставляем Java компилировать код в UTF-8
@@ -45,6 +48,7 @@ tasks.test {
     outputs.upToDateWhen { false }
     // Включаем использование JUnit 5
     useJUnitPlatform()
+
     // Формирует запуск следующей задачи, после завершения первой
     finalizedBy(printTestOver)
 
