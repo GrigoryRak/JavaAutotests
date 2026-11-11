@@ -154,7 +154,11 @@ public class testMethodsAssertionsAndTagsTask2 {
         Assertions.assertEquals(checkResultSum, sumToNResult);
 
         Assertions.assertNotEquals(0, sumToNResult,
-                () -> "Ошибка! Метод вернул 0 для числа " + randomNum + ", а 0 возвращаться не должен.");
+                () -> "Ошибка! Метод вернул 0 для числа " + randomNum + ", а 0 возвращаться не должен." + "\n"
+                + "Входящиее значение: " + randomNum + "\n"
+                + "Резульат проверки: " + checkResultSum + "\n"
+                + "Ответ метода: " + sumToNResult
+        );
     }
 
     static Stream<Arguments> generateRandomWordsWithBugArray() {
@@ -272,7 +276,11 @@ public class testMethodsAssertionsAndTagsTask2 {
         String mirrorCheckResult = Arrays.toString(mirrorCheck);
         System.out.println("Контрольный перевёрнутый массив -> " + mirrorCheckResult);
 
-        Assertions.assertArrayEquals(mirrorCheck, reverseResultArr, "Массивы должны быть идентичны");
+        Assertions.assertArrayEquals(mirrorCheck, reverseResultArr,
+                () -> "Массивы должны быть идентичны" + "\n"
+                        + "Для проверки: " + mirrorCheckResult + "\n"
+                        + "Для метода" + reverseResult
+                );
 
     }
 
@@ -296,7 +304,10 @@ public class testMethodsAssertionsAndTagsTask2 {
         System.out.println("Контрольная проверка среднего арифметического значения -> " + calcAverageCheck);
 
         Assertions.assertEquals(calcAverageCheck, calcAverageResult,
-                "Среднее арифметическое вычислено неверно!");
+                () -> "Среднее арифметическое вычислено неверно!" + "\n"
+                        + "Ответ контрольной проверки: " + calcAverageCheck + "\n"
+                        + "Ответ метода" + calcAverageResult
+        );
     }
 
     @RepeatedTest(10)
